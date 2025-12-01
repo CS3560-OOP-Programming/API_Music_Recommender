@@ -3,6 +3,10 @@ target/
 !src/main/**/target/
 !src/test/**/target/
 
+### Ignore Config ###
+config.properties
+src/java/org/example/Config.java
+
 ### IntelliJ IDEA ###
 .idea/
 .idea/modules.xml
