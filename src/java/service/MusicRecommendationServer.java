@@ -1,7 +1,4 @@
-package com.musicrecommender.server;
-
-import com.musicrecommender.api.LastFmAPIClient;
-import com.musicrecommender.config.Config;
+package service;
 
 import java.io.IOException;
 import java.net.ServerSocket;

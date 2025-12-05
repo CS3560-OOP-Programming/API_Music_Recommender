@@ -1,11 +1,8 @@
-package com.musicrecommender.server;
+package service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.musicrecommender.api.LastFmAPIClient;
-import com.musicrecommender.model.Track;
-import com.musicrecommender.recommendation.SimilarityBasedStrategy;
-import com.musicrecommender.recommendation.RecommendationEngine;
+import model.Track;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.BufferedReader;

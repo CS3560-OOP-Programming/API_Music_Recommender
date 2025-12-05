@@ -1,7 +1,6 @@
-package com.musicrecommender.recommendation;
+package model;
 
-import com.musicrecommender.api.LastFmAPIClient;
-import com.musicrecommender.model.Track;
+import service.LastFmAPIClient;
 import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;

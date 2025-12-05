@@ -1,6 +1,4 @@
-package com.musicrecommender.model;
-
-import java.util.List;
+package model;
 
 public class Artist {
     private String name;

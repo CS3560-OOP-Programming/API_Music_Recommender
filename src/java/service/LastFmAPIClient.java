@@ -1,11 +1,10 @@
-package com.musicrecommender.api;
+package service;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.musicrecommender.config.Config;
-import com.musicrecommender.model.Track;
+import model.Track;
 
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;

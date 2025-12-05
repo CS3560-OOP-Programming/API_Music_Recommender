@@ -7,7 +7,7 @@
 ## How to Run
 1. Clone repository: `git clone [URL]`  
 2. Open in IntelliJ/Eclipse or any other IDE  
-3. Run `Main.java`  
+3. Run `MusicRecommendationServer.java and then MusicRecommenderGUI.java`  
 
 ## Features Implemented
 - **Feature 1**: Add features here

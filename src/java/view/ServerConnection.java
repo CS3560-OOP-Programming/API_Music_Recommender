@@ -1,16 +1,15 @@
-package com.musicrecommender.client;
+package view;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.musicrecommender.config.Config;
-import com.musicrecommender.model.Track;
+import service.Config;
+import model.Track;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

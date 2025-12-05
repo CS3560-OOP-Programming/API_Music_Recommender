@@ -1,4 +1,4 @@
-package com.musicrecommender.config;
+package service;
 
 public class Config {
     // Replace with your Last.fm API key

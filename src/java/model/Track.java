@@ -1,6 +1,4 @@
-package com.musicrecommender.model;
-
-import java.util.List;
+package model;
 
 /**
  * Represents a music track with encapsulated properties.

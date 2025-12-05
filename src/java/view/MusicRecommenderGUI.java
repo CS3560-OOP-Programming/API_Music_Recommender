@@ -1,6 +1,6 @@
-package com.musicrecommender.client;
+package view;
 
-import com.musicrecommender.model.Track;
+import model.Track;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
