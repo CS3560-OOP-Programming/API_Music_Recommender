@@ -1,27 +1,20 @@
 package com.musicrecommender.model;
+
 import java.util.List;
 
 public class Artist {
-    private String id;
     private String name;
-    private List<String> genres;
-    private int popularity;
-    private int followers;
+    private String mbid;
+    private String url;
+    private int listeners;
+    private String imageUrl;
+    private double matchScore;  // For similar artists
 
-    public Artist(String id, String name) {
-        this.id = id;
+    public Artist(String name) {
         this.name = name;
     }
 
     // Getters and Setters
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -30,28 +23,44 @@ public class Artist {
         this.name = name;
     }
 
-    public List<String> getGenres() {
-        return genres;
+    public String getMbid() {
+        return mbid;
     }
 
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
+    public void setMbid(String mbid) {
+        this.mbid = mbid;
     }
 
-    public int getPopularity() {
-        return popularity;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPopularity(int popularity) {
-        this.popularity = popularity;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public int getFollowers() {
-        return followers;
+    public int getListeners() {
+        return listeners;
     }
 
-    public void setFollowers(int followers) {
-        this.followers = followers;
+    public void setListeners(int listeners) {
+        this.listeners = listeners;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(double matchScore) {
+        this.matchScore = matchScore;
     }
 
     @Override

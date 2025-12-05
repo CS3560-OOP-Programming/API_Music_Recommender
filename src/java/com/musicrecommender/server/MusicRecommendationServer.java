@@ -1,7 +1,6 @@
-package com.musicrecommender.server;/* need to change to correct package later
 package com.musicrecommender.server;
-*/
-import com.musicrecommender.api.SpotifyAPIClient;
+
+import com.musicrecommender.api.LastFmAPIClient;
 import com.musicrecommender.config.Config;
 
 import java.io.IOException;
@@ -16,13 +15,13 @@ import java.util.concurrent.Executors;
  */
 public class MusicRecommendationServer {
     private final int port;
-    private final SpotifyAPIClient apiClient;
+    private final LastFmAPIClient apiClient;
     private final ExecutorService threadPool;
     private volatile boolean running;
 
     public MusicRecommendationServer(int port) {
         this.port = port;
-        this.apiClient = new SpotifyAPIClient();
+        this.apiClient = new LastFmAPIClient();
         this.threadPool = Executors.newFixedThreadPool(10); // Pool of 10 threads
         this.running = false;
     }
@@ -31,9 +30,7 @@ public class MusicRecommendationServer {
      * Start the server and listen for client connections
      */
     public void start() throws IOException {
-        // Authenticate with Spotify API
-        System.out.println("Authenticating with Spotify API...");
-        apiClient.authenticate();
+        System.out.println("Last.fm Music Recommender Server initialized");
 
         running = true;
 

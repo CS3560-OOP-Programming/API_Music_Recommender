@@ -1,13 +1,11 @@
-package com.musicrecommender.server;/* Need to change these after we put all packages n stuff in order
 package com.musicrecommender.server;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.musicrecommender.api.SpotifyAPIClient;
-import com.musicrecommender.com.musicrecommender.model.Track;
-import com.musicrecommender.recommendation.PopularityBasedStrategy;
+import com.musicrecommender.api.LastFmAPIClient;
+import com.musicrecommender.model.Track;
+import com.musicrecommender.recommendation.SimilarityBasedStrategy;
 import com.musicrecommender.recommendation.RecommendationEngine;
-*/
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,10 +20,10 @@ import java.util.List;
  */
 public class ClientHandler implements Runnable {
     private final Socket clientSocket;
-    private final SpotifyAPIClient apiClient;
+    private final LastFmAPIClient apiClient;
     private final Gson gson;
 
-    public ClientHandler(Socket socket, SpotifyAPIClient apiClient) {
+    public ClientHandler(Socket socket, LastFmAPIClient apiClient) {
         this.clientSocket = socket;
         this.apiClient = apiClient;
         this.gson = new Gson();
@@ -101,12 +99,12 @@ public class ClientHandler implements Runnable {
 
     private String handleRecommend(JsonObject request) {
         try {
-            String trackId = request.get("trackId").getAsString();
+            String trackName = request.get("trackName").getAsString();
+            String artistName = request.get("artistName").getAsString();
             int count = request.has("count") ? request.get("count").getAsInt() : 5;
 
-            // Get recommendations using the engine
-            List<String> seedIds = List.of(trackId);
-            List<Track> recommendations = apiClient.getRecommendations(seedIds, count);
+            // Get similar tracks using Last.fm API
+            List<Track> recommendations = apiClient.getSimilarTracks(trackName, artistName, count);
 
             JsonObject response = new JsonObject();
             response.addProperty("status", "success");

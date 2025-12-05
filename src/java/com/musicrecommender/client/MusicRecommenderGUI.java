@@ -1,5 +1,5 @@
-package com.musicrecommender.client;//package com.musicrecommender.client;
-//change package
+package com.musicrecommender.client;
+
 import com.musicrecommender.model.Track;
 
 import javax.swing.*;
@@ -227,7 +227,10 @@ public class MusicRecommenderGUI extends JFrame {
         SwingWorker<List<Track>, Void> worker = new SwingWorker<>() {
             @Override
             protected List<Track> doInBackground() throws Exception {
-                return serverConnection.getRecommendations(selectedTrack.getId());
+                return serverConnection.getRecommendations(
+                        selectedTrack.getName(),
+                        selectedTrack.getArtist()
+                );
             }
 
             @Override

@@ -1,6 +1,6 @@
 package com.musicrecommender.recommendation;
 
-import com.musicrecommender.model.Track; //was com.musicrecommender.com.musicrecommender.model.Track in the lab, should we change the layout of our project? Yeah, i think we should make it similar to the lab first and then branch off from there
+import com.musicrecommender.model.Track;
 import java.util.List;
 
 /**

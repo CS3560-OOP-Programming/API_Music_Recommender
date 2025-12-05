@@ -1,13 +1,11 @@
 package com.musicrecommender.config;
 
 public class Config {
-    // Replace with your Spotify credentials
-    public static final String CLIENT_ID = "your_client_id_here";
-    public static final String CLIENT_SECRET = "your_client_secret_here";
+    // Replace with your Last.fm API key
+    public static final String API_KEY = "2371ab1eff3d366e41bd5dff097f4738";
 
-    // API Endpoints
-    public static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
-    public static final String API_BASE_URL = "https://api.spotify.com/v1";
+    // API Endpoint
+    public static final String API_BASE_URL = "http://ws.audioscrobbler.com/2.0/";
 
     // Server Configuration
     public static final int SERVER_PORT = 8888;

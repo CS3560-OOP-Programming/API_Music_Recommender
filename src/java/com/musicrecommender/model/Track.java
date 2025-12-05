@@ -1,4 +1,5 @@
 package com.musicrecommender.model;
+
 import java.util.List;
 
 /**
@@ -6,31 +7,21 @@ import java.util.List;
  * Demonstrates Encapsulation - private fields with public getters/setters
  */
 public class Track {
-    private String id;
     private String name;
-    private List<String> artists;
-    private String albumName;
-    private int durationMs;
-    private int popularity;
-    private String previewUrl;
+    private String artist;
+    private String mbid;  // MusicBrainz ID (optional unique identifier)
+    private String url;
+    private int listeners;
+    private String imageUrl;
+    private double matchScore;  // For similar tracks
 
     // Constructor
-    public Track(String id, String name, List<String> artists, String albumName) {
-        this.id = id;
+    public Track(String name, String artist) {
         this.name = name;
-        this.artists = artists;
-        this.albumName = albumName;
+        this.artist = artist;
     }
 
     // Getters and Setters (Encapsulation)
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -39,57 +30,64 @@ public class Track {
         this.name = name;
     }
 
-    public List<String> getArtists() {
-        return artists;
+    public String getArtist() {
+        return artist;
     }
 
-    public void setArtists(List<String> artists) {
-        this.artists = artists;
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 
-    public String getAlbumName() {
-        return albumName;
+    public String getMbid() {
+        return mbid;
     }
 
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
+    public void setMbid(String mbid) {
+        this.mbid = mbid;
     }
 
-    public int getDurationMs() {
-        return durationMs;
+    public String getUrl() {
+        return url;
     }
 
-    public void setDurationMs(int durationMs) {
-        this.durationMs = durationMs;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public int getPopularity() {
-        return popularity;
+    public int getListeners() {
+        return listeners;
     }
 
-    public void setPopularity(int popularity) {
-        this.popularity = popularity;
+    public void setListeners(int listeners) {
+        this.listeners = listeners;
     }
 
-    public String getPreviewUrl() {
-        return previewUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setPreviewUrl(String previewUrl) {
-        this.previewUrl = previewUrl;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public double getMatchScore() {
+        return matchScore;
+    }
+
+    public void setMatchScore(double matchScore) {
+        this.matchScore = matchScore;
     }
 
     @Override
     public String toString() {
-        return String.format("%s - %s (%s)",
-                String.join(", ", artists), name, albumName);
+        if (matchScore > 0) {
+            return String.format("%s - %s (Match: %.2f)", artist, name, matchScore);
+        }
+        return String.format("%s - %s", artist, name);
     }
 
-    // Convert duration to readable format
-    public String getFormattedDuration() {
-        int seconds = durationMs / 1000;
-        int minutes = seconds / 60;
-        seconds = seconds % 60;
-        return String.format("%d:%02d", minutes, seconds);
+    // Format listeners count with commas
+    public String getFormattedListeners() {
+        return String.format("%,d", listeners);
     }
 }

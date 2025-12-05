@@ -52,10 +52,11 @@ public class ServerConnection {
     /**
      * Get recommendations from the server
      */
-    public List<Track> getRecommendations(String trackId) throws IOException {
+    public List<Track> getRecommendations(String trackName, String artistName) throws IOException {
         JsonObject request = new JsonObject();
         request.addProperty("action", "RECOMMEND");
-        request.addProperty("trackId", trackId);
+        request.addProperty("trackName", trackName);
+        request.addProperty("artistName", artistName);
         request.addProperty("count", 10);
 
         return sendRequest(request);

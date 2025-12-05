@@ -1,6 +1,6 @@
 package com.musicrecommender.recommendation;
 
-import com.musicrecommender.api.SpotifyAPIClient;
+import com.musicrecommender.api.LastFmAPIClient;
 import com.musicrecommender.model.Track;
 
 import java.io.IOException;
@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Recommends tracks based on popularity
+ * Recommends tracks based on Last.fm's similarity algorithm
  * Demonstrates Polymorphism - implements RecommendationStrategy
  */
-public class PopularityBasedStrategy implements RecommendationStrategy {
-    private final SpotifyAPIClient apiClient;
+public class SimilarityBasedStrategy implements RecommendationStrategy {
+    private final LastFmAPIClient apiClient;
 
-    public PopularityBasedStrategy(SpotifyAPIClient apiClient) {
+    public SimilarityBasedStrategy(LastFmAPIClient apiClient) {
         this.apiClient = apiClient;
     }
 
@@ -26,10 +26,8 @@ public class PopularityBasedStrategy implements RecommendationStrategy {
                 return new ArrayList<>();
             }
 
-            List<String> seedIds = new ArrayList<>();
-            seedIds.add(userTracks.get(0).getId());
-
-            return apiClient.getRecommendations(seedIds, count);
+            Track seedTrack = userTracks.get(0);
+            return apiClient.getSimilarTracks(seedTrack.getName(), seedTrack.getArtist(), count);
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
@@ -38,6 +36,6 @@ public class PopularityBasedStrategy implements RecommendationStrategy {
 
     @Override
     public String getStrategyName() {
-        return "Popularity-Based Recommendations";
+        return "Similarity-Based Recommendations (Last.fm)";
     }
 }

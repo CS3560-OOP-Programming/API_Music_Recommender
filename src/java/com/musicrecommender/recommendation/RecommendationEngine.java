@@ -1,4 +1,4 @@
-package com.musicrecommender.recommendation; //needs to be changed
+package com.musicrecommender.recommendation;
 
 import com.musicrecommender.model.Track;
 import java.util.List;
