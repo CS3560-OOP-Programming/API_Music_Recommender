@@ -2,6 +2,8 @@ package service;
 
 public class Config {
     // Replace with your Last.fm API key
+    //POSSIBLY MOVE API KEY, UNSAFE DECLARATION
+    //API KEY CURRENTLY CONTAINS SELF-DESTRUCT DATE
     public static final String API_KEY = "2371ab1eff3d366e41bd5dff097f4738";
 
     // API Endpoint
