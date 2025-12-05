@@ -18,12 +18,14 @@ public class MusicRecommenderGUI extends JFrame {
     // GUI Components
     private JTextField searchField;
     private JButton searchButton;
+    //private JButton historyButton;
     private JList<Track> searchResultsList;
     private DefaultListModel<Track> searchResultsModel;
     private JButton getRecommendationsButton;
     private JList<Track> recommendationsList;
     private DefaultListModel<Track> recommendationsModel;
     private JLabel statusLabel;
+    private JButton historyButton;
 
     // Server connection
     private ServerConnection serverConnection;
@@ -139,6 +141,10 @@ public class MusicRecommenderGUI extends JFrame {
         statusLabel = new JLabel("Ready");
         statusLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         panel.add(statusLabel, BorderLayout.WEST);
+
+        historyButton = new JButton("History");
+        historyButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        panel.add(historyButton, BorderLayout.EAST);
         return panel;
     }
 
