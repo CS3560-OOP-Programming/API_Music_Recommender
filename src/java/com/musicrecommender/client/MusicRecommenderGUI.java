@@ -1,4 +1,4 @@
-//package com.musicrecommender.client;
+package com.musicrecommender.client;//package com.musicrecommender.client;
 //change package
 import com.musicrecommender.model.Track;
 

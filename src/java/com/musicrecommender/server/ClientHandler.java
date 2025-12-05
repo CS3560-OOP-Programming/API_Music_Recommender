@@ -1,10 +1,10 @@
-/* Need to change these after we put all packages n stuff in order
+package com.musicrecommender.server;/* Need to change these after we put all packages n stuff in order
 package com.musicrecommender.server;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.musicrecommender.api.SpotifyAPIClient;
-import com.musicrecommender.model.Track;
+import com.musicrecommender.com.musicrecommender.model.Track;
 import com.musicrecommender.recommendation.PopularityBasedStrategy;
 import com.musicrecommender.recommendation.RecommendationEngine;
 */

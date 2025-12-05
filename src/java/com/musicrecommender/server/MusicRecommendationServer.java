@@ -1,4 +1,4 @@
-/* need to change to correct package later
+package com.musicrecommender.server;/* need to change to correct package later
 package com.musicrecommender.server;
 */
 import com.musicrecommender.api.SpotifyAPIClient;

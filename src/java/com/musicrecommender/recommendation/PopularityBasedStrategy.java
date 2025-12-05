@@ -1,4 +1,4 @@
-package model;
+package com.musicrecommender.recommendation;
 
 import com.musicrecommender.api.SpotifyAPIClient;
 import com.musicrecommender.model.Track;

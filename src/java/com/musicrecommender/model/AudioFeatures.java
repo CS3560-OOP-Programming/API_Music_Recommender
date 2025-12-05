@@ -1,4 +1,4 @@
-package model;
+package com.musicrecommender.model;
 /**
  * Represents audio analysis features from Spotify API
  */

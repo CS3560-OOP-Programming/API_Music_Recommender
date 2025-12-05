@@ -1,6 +1,6 @@
 package com.musicrecommender.recommendation; //needs to be changed
 
-import model.Track;
+import com.musicrecommender.model.Track;
 import java.util.List;
 
 /**

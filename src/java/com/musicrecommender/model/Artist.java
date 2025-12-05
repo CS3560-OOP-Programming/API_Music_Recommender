@@ -1,4 +1,4 @@
-package model;
+package com.musicrecommender.model;
 import java.util.List;
 
 public class Artist {
