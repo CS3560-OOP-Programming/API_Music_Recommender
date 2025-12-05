@@ -2,6 +2,7 @@ package com.musicrecommender.recommendation;
 
 import com.musicrecommender.api.LastFmAPIClient;
 import com.musicrecommender.model.Track;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class SimilarityBasedStrategy implements RecommendationStrategy {
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
     }
 

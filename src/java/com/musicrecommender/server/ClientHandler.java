@@ -6,6 +6,7 @@ import com.musicrecommender.api.LastFmAPIClient;
 import com.musicrecommender.model.Track;
 import com.musicrecommender.recommendation.SimilarityBasedStrategy;
 import com.musicrecommender.recommendation.RecommendationEngine;
+import org.apache.hc.core5.http.ParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -112,7 +113,7 @@ public class ClientHandler implements Runnable {
             response.add("data", gson.toJsonTree(recommendations));
 
             return gson.toJson(response);
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             return createErrorResponse("Recommendation failed: " + e.getMessage());
         }
     }
