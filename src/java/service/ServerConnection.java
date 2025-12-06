@@ -1,8 +1,7 @@
-package view;
+package service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import service.Config;
 import model.Track;
 
 import java.io.BufferedReader;

@@ -7,6 +7,10 @@ target/
 config.properties
 src/java/org/example/Config.java
 
+### Ignoring Logs ###
+requestLog.txt
+*.log
+
 ### IntelliJ IDEA ###
 .idea/
 .idea/modules.xml
