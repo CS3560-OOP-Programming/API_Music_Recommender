@@ -10,6 +10,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.File;
 
 /**
  * Main GUI application for the Music Recommender System
@@ -27,6 +32,7 @@ public class MusicRecommenderGUI extends JFrame {
     private DefaultListModel<Track> recommendationsModel;
     private JLabel statusLabel;
     private JButton historyButton;
+    private static final String LOG_FILE = "requestLog.txt";
 
     // Server connection
     private ServerConnection serverConnection;
@@ -247,6 +253,7 @@ public class MusicRecommenderGUI extends JFrame {
                     List<Track> recommendations = get();
                     displayRecommendations(recommendations);
                     updateStatus("Generated " + recommendations.size() + " recommendations");
+                    addToLog(selectedTrack, recommendations);
                 } catch (Exception e) {
                     showError("Failed to get recommendations: " + e.getMessage());
                     updateStatus("Recommendation failed");
@@ -292,6 +299,28 @@ public class MusicRecommenderGUI extends JFrame {
             serverConnection.disconnect();
         }
     }
+
+    //method writes to the history log
+    /**
+     * Append this recommendation search to a history text file
+     */
+    private void addToLog(Track selectedTrack, List<Track> recommendations) {
+        try (FileWriter fw = new FileWriter(LOG_FILE, true);
+             PrintWriter pw = new PrintWriter(fw)) {
+
+            //print searches to file
+            pw.println("Search: " + selectedTrack.getName() + " - " + selectedTrack.getArtist());
+            for (Track track : recommendations) {
+                pw.println("    " + track.getName() + " - " + track.getArtist());
+            }
+            pw.println(); // blank line between entries
+
+        } catch (IOException e) {
+            // You can also use showError if you want to inform the user
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * Main method to launch the application
