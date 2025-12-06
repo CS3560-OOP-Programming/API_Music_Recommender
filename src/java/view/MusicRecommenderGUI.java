@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.File;
+import javax.swing.JDialog;
 
 /**
  * Main GUI application for the Music Recommender System
@@ -151,7 +152,7 @@ public class MusicRecommenderGUI extends JFrame {
 
         historyButton = new JButton("History");
         historyButton.setFont(new Font("Arial", Font.PLAIN, 12));
-        historyButton.addActionListener(e -> {JOptionPane.showMessageDialog(this, "Histtory stuff happening");});
+        historyButton.addActionListener(e -> displayLog());
         panel.add(historyButton, BorderLayout.EAST);
         return panel;
     }
@@ -319,6 +320,36 @@ public class MusicRecommenderGUI extends JFrame {
             // You can also use showError if you want to inform the user
             e.printStackTrace();
         }
+    }
+
+    private void displayLog() {
+        File file = new File("requestLog.txt");
+        DefaultListModel<String> historyModel = new DefaultListModel<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                historyModel.addElement(line);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error reading requestLog.txt: " + e.getMessage(),
+                    "File Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+        //History log gui creation
+        JList<String> historyList = new JList<>(historyModel);
+        historyList.setFont(new Font("Arial", Font.PLAIN, 12));
+        JScrollPane scrollPane = new JScrollPane(historyList);
+        scrollPane.setPreferredSize(new Dimension(600, 400));
+        // Dialog pane for the log
+        JDialog dialog = new JDialog(this, "Search Log History", true);
+        dialog.getContentPane().add(scrollPane);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
 
