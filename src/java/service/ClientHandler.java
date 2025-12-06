@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Handles individual client connections in separate threads
@@ -29,9 +31,11 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
+        String fileName = "requestLog.txt";
         System.out.println("New client connected: " + clientSocket.getInetAddress());
 
         try (
+                FileWriter fw = new FileWriter(fileName, true);
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)
@@ -39,6 +43,8 @@ public class ClientHandler implements Runnable {
             String request;
             while ((request = in.readLine()) != null) {
                 System.out.println("Received request: " + request);
+                fw.write(request + System.lineSeparator());
+                fw.flush();
                 String response = handleRequest(request);
                 out.println(response);
             }

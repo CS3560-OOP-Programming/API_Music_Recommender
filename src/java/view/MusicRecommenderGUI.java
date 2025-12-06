@@ -144,6 +144,7 @@ public class MusicRecommenderGUI extends JFrame {
 
         historyButton = new JButton("History");
         historyButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        historyButton.addActionListener(e -> {JOptionPane.showMessageDialog(this, "Histtory stuff happening");});
         panel.add(historyButton, BorderLayout.EAST);
         return panel;
     }
