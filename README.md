@@ -4,7 +4,7 @@
 - Alex Auyon  
 - Garrison Gibson  
 
-## How to Run
+## Setup
 1. Get API key from lost.fm
 3. Clone repository: `git clone [URL]`  
 4. Open in IntelliJ/Eclipse or any other IDE
@@ -19,16 +19,10 @@
 - **Feature 5**: Professional documentation(Code documentation, report, and README is professional)
 - **Bonus Feature 1**: Multi-language support(Due to the nature of our search, users can search for artists and songs in other languages)
 
-## Controls
-- Terminal/UI instructions
-
-## Known Issues  
-As of now, there are no known issues, however below are some of the issues we have since fixed:  
-- **Issue 1**: 
-
-
-## External Libraries
-- None were used
+## Design Patterns
+- Strategy:
+- Factory:
+- Observer:
 
 ## Video Demo
 - Here is a link to our video demo: 
