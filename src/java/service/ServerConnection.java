@@ -29,10 +29,16 @@ public class ServerConnection {
      * Connect to the server
      */
     public void connect() throws IOException {
-        socket = new Socket(Config.SERVER_HOST, Config.SERVER_PORT);
-        out = new PrintWriter(socket.getOutputStream(), true);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        System.out.println("Connected to server");
+        try {
+            socket = new Socket(Config.SERVER_HOST, Config.SERVER_PORT);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            System.out.println("Connected to server");
+        } catch (IOException e) {
+            System.err.println("Server connection failed: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     /**
@@ -61,21 +67,55 @@ public class ServerConnection {
     }
 
     private List<Track> sendRequest(JsonObject request) throws IOException {
-        // Send request
-        out.println(gson.toJson(request));
+        try {
+            // Send request
+            out.println(gson.toJson(request));
 
-        // Receive response
-        String responseLine = in.readLine();
-        JsonObject response = gson.fromJson(responseLine, JsonObject.class);
+            // Receive response
+            String responseLine = in.readLine();
+            //JsonObject response = gson.fromJson(responseLine, JsonObject.class);
 
-        if (response.get("status").getAsString().equals("success")) {
-            // Parse tracks from response
-            Track[] tracksArray = gson.fromJson(
-                    response.get("data"), Track[].class);
-            return List.of(tracksArray);
-        } else {
-            String errorMsg = response.get("message").getAsString();
-            throw new IOException("Server error: " + errorMsg);
+            if (responseLine == null) {
+                throw new IOException("The server disconnected");
+            }
+
+            JsonObject response = gson.fromJson(responseLine, JsonObject.class);
+
+            if (response.get("status").getAsString().equals("success")) {
+                // Parse tracks from response
+                Track[] tracksArray = gson.fromJson(
+                        response.get("data"), Track[].class);
+                return List.of(tracksArray);
+            } else {
+                String errorMsg = response.get("message").getAsString();
+                throw new IOException("Server error: " + errorMsg);
+            }
+            //Error handling: attempt to reconnect in the case of network issues
+        } catch (IOException e) {
+            System.err.println("Server connection got interrupted " + e.getMessage());
+            e.printStackTrace();
+
+            retryConnect();
+
+            out.println(gson.toJson(request));
+            String responseLine = in.readLine();
+
+            if (responseLine == null) {
+                throw new IOException("Retry connection failed: " + e.getMessage());
+            }
+
+            JsonObject response = gson.fromJson(responseLine, JsonObject.class);
+
+            //Slightly repetitive, could possibly be optimized
+            if (response.get("status").getAsString().equals("success")) {
+                // Parse tracks from response
+                Track[] tracksArray = gson.fromJson(
+                        response.get("data"), Track[].class);
+                return List.of(tracksArray);
+            } else {
+                String errorMsg = response.get("message").getAsString();
+                throw new IOException("Server error: " + errorMsg);
+            }
         }
     }
 
@@ -95,5 +135,17 @@ public class ServerConnection {
 
     public boolean isConnected() {
         return socket != null && socket.isConnected() && !socket.isClosed();
+    }
+
+    public void retryConnect() throws IOException {
+        // Error handling: if server disconnects mid-way through running application
+        try{
+            connect();
+            System.out.println("Succesfully reconnected");
+        }catch(IOException e){
+            System.out.println("Reconnection failed: " + e.getMessage());
+            throw e;
+        }
+
     }
 }

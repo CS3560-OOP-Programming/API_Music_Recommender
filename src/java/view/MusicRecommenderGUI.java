@@ -160,6 +160,7 @@ public class MusicRecommenderGUI extends JFrame {
     /**
      * Initialize server connection
      */
+    //Error handling: gracefully handle server connection failures
     private void initializeConnection() {
         serverConnection = new ServerConnection();
         try {
@@ -177,6 +178,7 @@ public class MusicRecommenderGUI extends JFrame {
     private void performSearch() {
         String query = searchField.getText().trim();
 
+        //Error handling: handles empty input
         if (query.isEmpty()) {
             showError("Please enter a search query");
             return;
@@ -230,6 +232,7 @@ public class MusicRecommenderGUI extends JFrame {
     private void getRecommendations() {
         Track selectedTrack = searchResultsList.getSelectedValue();
 
+        //Error handling: ensures track selection before recommendation
         if (selectedTrack == null) {
             showError("Please select a track first");
             return;
