@@ -6,10 +6,12 @@
 
 ## Setup
 1. Get API key from lost.fm
-3. Clone repository: `git clone [URL]`  
+2. Clone repository: `git clone [URL]`  
 4. Open in IntelliJ/Eclipse or any other IDE
-5. export API_KEY = "your-key"
-6. Run `MusicRecommendationServer.java and then MusicRecommenderGUI.java`  
+5. open edit configurations for musicRecommendationServer.java
+6. add you key in environment variables as API_KEY="your-key"
+7. Run `MusicRecommendationServer.java and then MusicRecommenderGUI.java`
+
 
 ## Features Implemented
 - **Feature 1**: Multiple modes/strategies(Strategy Pattern)
@@ -20,9 +22,9 @@
 - **Bonus Feature 1**: Multi-language support(Due to the nature of our search, users can search for artists and songs in other languages)
 
 ## Design Patterns
-- Strategy:
-- Factory:
-- Observer:
+- Strategy: Utilizes similarity-based and recommendation strategies
+- Factory: Handles api requests and calls in a clean and easy to understand manner
+- Observer: UI can change after selecting options
 
 ## Video Demo
 - Here is a link to our video demo: 
