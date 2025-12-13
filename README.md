@@ -27,7 +27,7 @@
 - Observer: UI can change after selecting options
 
 ## Video Demo
-- Here is a link to our video demo: 
+- Here is a link to our video demo: https://youtu.be/DysatyR5TI4
 
 ## Credits
 - Class music recommendation lab
