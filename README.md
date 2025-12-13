@@ -22,7 +22,7 @@
 - **Bonus Feature 1**: Multi-language support(Due to the nature of our search, users can search for artists and songs in other languages)
 
 ## Design Patterns
-- Strategy: Utilizes similarity-based and recommendation strategies
+- Strategy: Utilizes similarity-based and random recommendation strategies
 - Factory: Handles api requests and calls in a clean and easy to understand manner
 - Observer: UI can change after selecting options
 
