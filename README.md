@@ -1,4 +1,4 @@
-# Music_Recommender_API_Assignment_3
+# API_Music_Recommender_Assignment_3
 
 ## Team Members
 - Alex Auyon  
