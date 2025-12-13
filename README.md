@@ -9,7 +9,7 @@
 2. Clone repository: `git clone [URL]`  
 4. Open in IntelliJ/Eclipse or any other IDE
 5. open edit configurations for musicRecommendationServer.java
-6. add you key in environment variables as API_KEY="your-key"
+6. add your key in environment variables as API_KEY="your-key"
 7. Run `MusicRecommendationServer.java and then MusicRecommenderGUI.java`
 
 
