@@ -25,4 +25,4 @@
 ## AI Usage 
 Music recommender lab was written and modified by claude to use the Last fm API. Api project code is built off of that foundation. Some of the tests were also built with some AI guidance. Guidance for RandomStrategy logic and implementation utilized AI tools as well. 
 
-## Time Spent: ~[20] hours
+## Time Spent: ~25 hours
