@@ -1,4 +1,4 @@
-# Spotify_API_Assignment_3
+# Music_Recommender_API_Assignment_3
 
 ## Team Members
 - Alex Auyon  
