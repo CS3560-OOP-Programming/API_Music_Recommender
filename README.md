@@ -5,7 +5,7 @@
 - Garrison Gibson  
 
 ## Setup
-1. Get API key from lost.fm
+1. Get API key from last.fm
 2. Clone repository: `git clone [URL]`  
 4. Open in IntelliJ/Eclipse or any other IDE
 5. open edit configurations for musicRecommendationServer.java
