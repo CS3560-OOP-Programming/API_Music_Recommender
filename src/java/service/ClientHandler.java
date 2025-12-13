@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import model.Track;
 import org.apache.hc.core5.http.ParseException;
+import model.RecommendationEngine;
+import model.SimilarityBasedStrategy;
+import model.RandomStrategy;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +16,7 @@ import java.net.Socket;
 import java.util.List;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Handles individual client connections in separate threads
@@ -22,11 +26,19 @@ public class ClientHandler implements Runnable {
     private final Socket clientSocket;
     private final LastFmAPIClient apiClient;
     private final Gson gson;
+    private final List<Track> tracksSeen = new ArrayList<>();
+    private RecommendationEngine recommendationEngine;
+    private SimilarityBasedStrategy similarityStrategy;
+    private RandomStrategy randomStrategy;
 
     public ClientHandler(Socket socket, LastFmAPIClient apiClient) {
         this.clientSocket = socket;
         this.apiClient = apiClient;
         this.gson = new Gson();
+        this.similarityStrategy = new SimilarityBasedStrategy(apiClient);
+        this.randomStrategy = new RandomStrategy(tracksSeen);
+        this.recommendationEngine = new RecommendationEngine(new SimilarityBasedStrategy(apiClient));
+        //this.recommendationEngine = new RecommendationEngine(new RandomStrategy(tracksSeen));
     }
 
     @Override
@@ -75,6 +87,9 @@ public class ClientHandler implements Runnable {
                 case "RECOMMEND":
                     return handleRecommend(jsonRequest);
 
+                case "SET_STRATEGY":
+                    return handleSetStrategy(jsonRequest);
+
                 default:
                     return createErrorResponse("Unknown action: " + action);
             }
@@ -89,6 +104,7 @@ public class ClientHandler implements Runnable {
             int limit = request.has("limit") ? request.get("limit").getAsInt() : 10;
 
             List<Track> tracks = apiClient.searchTracks(query, limit);
+            tracksSeen.addAll(tracks);
 
             JsonObject response = new JsonObject();
             response.addProperty("status", "success");
@@ -108,7 +124,10 @@ public class ClientHandler implements Runnable {
             int count = request.has("count") ? request.get("count").getAsInt() : 5;
 
             // Get similar tracks using Last.fm API
-            List<Track> recommendations = apiClient.getSimilarTracks(trackName, artistName, count);
+            //List<Track> recommendations = apiClient.getSimilarTracks(trackName, artistName, count);
+            List<Track> recommendations = recommendationEngine.getRecommendations(List.of(new Track(trackName, artistName)), count);
+
+            tracksSeen.addAll(recommendations);
 
             JsonObject response = new JsonObject();
             response.addProperty("status", "success");
@@ -116,8 +135,43 @@ public class ClientHandler implements Runnable {
             response.add("data", gson.toJsonTree(recommendations));
 
             return gson.toJson(response);
-        } catch (IOException | ParseException e) {
+        }catch(Exception e){
             return createErrorResponse("Recommendation failed: " + e.getMessage());
+        }
+        //} catch (IOException | ParseException e) {
+            //return createErrorResponse("Recommendation failed: " + e.getMessage());
+        //}
+    }
+
+    private String handleSetStrategy(JsonObject request){
+        if(!request.has("strategy")){
+            return createErrorResponse("There is no strategy field");
+        }
+
+        try {
+            String strategy = request.get("strategy").getAsString().toLowerCase();
+
+            switch (strategy) {
+                case "similarity":
+                    recommendationEngine.setStrategy(new SimilarityBasedStrategy(apiClient));
+                    break;
+
+                case "random":
+                    recommendationEngine.setStrategy(new RandomStrategy(tracksSeen));
+                    break;
+
+                default:
+                    return createErrorResponse("Unrecognized strategy: " + strategy);
+            }
+
+            JsonObject response = new JsonObject();
+            response.addProperty("status", "success");
+            response.addProperty("message", "strategy switched to " + strategy);
+
+            return gson.toJson(response);
+
+        } catch (Exception e) {
+            return createErrorResponse("Failed to set strategy: " + e.getMessage());
         }
     }
 

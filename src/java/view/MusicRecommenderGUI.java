@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.File;
 import javax.swing.JDialog;
+import com.google.gson.JsonObject;
 
 /**
  * Main GUI application for the Music Recommender System
@@ -34,6 +35,8 @@ public class MusicRecommenderGUI extends JFrame {
     private JLabel statusLabel;
     private JButton historyButton;
     private static final String LOG_FILE = "requestLog.txt";
+    private JButton similarityButton;
+    private JButton randomButton;
 
     // Server connection
     private ServerConnection serverConnection;
@@ -150,10 +153,39 @@ public class MusicRecommenderGUI extends JFrame {
         statusLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         panel.add(statusLabel, BorderLayout.WEST);
 
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         historyButton = new JButton("History");
         historyButton.setFont(new Font("Arial", Font.PLAIN, 12));
         historyButton.addActionListener(e -> displayLog());
-        panel.add(historyButton, BorderLayout.EAST);
+
+        similarityButton = new JButton("Similar Recommendations");
+        similarityButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        similarityButton.addActionListener(e -> {
+            JsonObject request = new JsonObject();
+            request.addProperty("action", "SET_STRATEGY");
+            request.addProperty("strategy", "SIMILARITY");
+            serverConnection.sendRequestInternal(request);
+            statusLabel.setText("Strategy: Similarity");
+        });
+
+        //Have random button functionality allow for random recommendations
+        // to be generated upon clicking, without first clicking search result
+        randomButton = new JButton("Random Recommendations");
+        randomButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        randomButton.addActionListener(e -> {
+            JsonObject request = new JsonObject();
+            request.addProperty("action", "SET_STRATEGY");
+            request.addProperty("strategy", "RANDOM");
+            serverConnection.sendRequestInternal(request);
+            statusLabel.setText("Strategy: Random");
+        });
+
+        buttonPanel.add(similarityButton);
+        buttonPanel.add(randomButton);
+        buttonPanel.add(historyButton);
+
+        panel.add(buttonPanel, BorderLayout.EAST);
         return panel;
     }
 

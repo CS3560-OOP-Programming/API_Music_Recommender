@@ -83,8 +83,15 @@ public class ServerConnection {
 
             if (response.get("status").getAsString().equals("success")) {
                 // Parse tracks from response
+
+                //DEBUG FIX: Add to make sure that response has data and isn't null
+                if(!response.has("data") || response.get("data").isJsonNull()){
+                    return List.of();
+                }
+
                 Track[] tracksArray = gson.fromJson(
                         response.get("data"), Track[].class);
+
                 return List.of(tracksArray);
             } else {
                 String errorMsg = response.get("message").getAsString();
@@ -108,14 +115,30 @@ public class ServerConnection {
 
             //Slightly repetitive, could possibly be optimized
             if (response.get("status").getAsString().equals("success")) {
-                // Parse tracks from response
+                //DEBUG FIX: Add to make sure that response has data and isn't null
+                if(!response.has("data") || response.get("data").isJsonNull()){
+                    return List.of();
+                }
+
                 Track[] tracksArray = gson.fromJson(
                         response.get("data"), Track[].class);
+
                 return List.of(tracksArray);
             } else {
                 String errorMsg = response.get("message").getAsString();
                 throw new IOException("Server error: " + errorMsg);
             }
+        }
+    }
+
+    //Added so that GUI can call sendRequest without accessing the private method
+    //Public wrapper method
+    public void sendRequestInternal(JsonObject request){
+        try{
+            sendRequest(request);
+        }catch(IOException e){
+            System.err.println("Send request failed: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
